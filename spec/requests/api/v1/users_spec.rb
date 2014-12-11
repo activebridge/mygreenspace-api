@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe 'GET /v1/users/:id' do
   it 'returns a user by :id' do
     user = create(:user)

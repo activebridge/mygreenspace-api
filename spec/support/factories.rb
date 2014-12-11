@@ -15,4 +15,11 @@ FactoryGirl.define do
     # password              "foobar123"
     # password_confirmation "foobar123"
   end
+
+  factory :space do
+    width   { rand(0..1000) }
+    length  { rand(0..1000) }
+
+    user factory: :user
+  end
 end
