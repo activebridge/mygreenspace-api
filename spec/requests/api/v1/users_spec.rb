@@ -11,6 +11,9 @@ describe 'GET /v1/users/:id' do
         'first_name'    => user.first_name,
         'last_name'     => user.last_name,
 
+        'email'         => user.email,
+        'picture'       => user.picture,
+
         'created_at'    => user.created_at.as_json,
         'updated_at'    => user.updated_at.as_json
       }

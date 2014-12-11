@@ -25,10 +25,8 @@ describe 'GET /v1/users/:id/spaces' do
     space_1 = create(:space)
     space_2 = create(:space)
 
-
     get '/v1/users/:id/spaces', {}
 
-    binding.pry
     expect(response_json.first.last).to eq([
       {
         'id'            => space_1.id,
