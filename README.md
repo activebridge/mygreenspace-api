@@ -3,7 +3,7 @@ My Green Space API
 
 ## Database Schema (Entity Relationship Diagram)
 
-![](https://s3.amazonaws.com/f.cl.ly/items/2h3T0b3j1h2N3p072X20/erd.png)
+![](/erd.png)
 
 ## Installation
 
