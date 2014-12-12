@@ -1,87 +1,170 @@
 require 'spec_helper'
 
 describe 'GET /v1/users/:id' do
-  it 'returns a user by :id' do
-    user = create(:user)
+  context 'with valid user' do
+    let(:user) { create(:user) }
 
-    get "/v1/users/#{user.id}", {}
+    before do
+      get "/v1/users/#{user.id}"
+    end
 
-    expect(response_json).to eq(
-      {
-        'first_name'    => user.first_name,
-        'last_name'     => user.last_name,
+    it { expect(response_json).to eq({
+        'id'         => user.id,
+        'first_name' => user.first_name,
+        'last_name'  => user.last_name,
+        'email'      => user.email,
+        'picture'    => user.picture,
+        'created_at' => user.created_at.as_json,
+        'updated_at' => user.updated_at.as_json
+      })
+    }
+  end
 
-        'email'         => user.email,
-        'picture'       => user.picture,
+  context 'with invalid user' do
+    let(:id) { 'unexisting_user_id' }
 
-        'created_at'    => user.created_at.as_json,
-        'updated_at'    => user.updated_at.as_json
-      }
-    )
+    it {
+      expect {
+        get "/v1/users/#{id}"
+      }.to raise_error ActiveRecord::RecordNotFound
+    }
   end
 end
 
 describe 'GET /v1/users' do
-  it 'retrives all users' do
-    user_1 = create(:user)
-    user_2 = create(:user)
+  let!(:user_1) { create(:user) }
+  let!(:user_2) { create(:user) }
 
-    get '/v1/users', {}
+  before do
+    get '/v1/users'
+  end
 
-    expect(response_json.first.last).to eq([
+  it { expect(response_json['users']).to have(2).items }
+  it { expect(response_json['users']).to eq([
       {
-        'id'            => user_1.id,
-
-        'created_at'    => user_1.created_at.as_json,
-        'updated_at'    => user_1.updated_at.as_json
+        'id'         => user_1.id,
+        'created_at' => user_1.created_at.as_json,
+        'updated_at' => user_1.updated_at.as_json
       },
       {
-        'id'            => user_2.id,
-
-        'created_at'    => user_2.created_at.as_json,
-        'updated_at'    => user_2.updated_at.as_json
+        'id'         => user_2.id,
+        'created_at' => user_2.created_at.as_json,
+        'updated_at' => user_2.updated_at.as_json
       }
     ])
-  end
+  }
 end
 
 describe 'POST /v1/users' do
-  it 'saves a user' do
-    user = create(:user)
-
-    post '/v1/users', {}
-
-    user = User.last
-    expect(response_json).to eq(
+  context 'with valid params' do
+    let(:email) { Faker::Internet.email }
+    let(:first_name) { Faker::Name.first_name }
+    let(:last_name) { Faker::Name.last_name }
+    let(:request_params) {
       {
-        'id'            => user.id
-       }
-    )
+        user: {
+          email: email,
+          first_name: first_name,
+          last_name: last_name,
+        }
+      }
+    }
+
+    before do
+      post '/v1/users', request_params
+    end
+
+    it { expect(response_json['id']).to be }
+    it { expect(response_json['email']).to eq email }
+    it { expect(response_json['first_name']).to eq first_name }
+    it { expect(response_json['last_name']).to eq last_name }
+  end
+
+  context 'with invalid params' do
+    let(:exisging_user) { create(:user) }
+    let(:request_params) {
+      {
+        user: {
+          first_name: '',
+          email: exisging_user.email
+        }
+      }
+    }
+
+    before do
+      post '/v1/users', request_params
+    end
+
+    it { expect(response_json).to eq(
+      {
+        'message' => 'Validation Failed',
+        'errors' => [
+          "First name can't be blank",
+          "Last name can't be blank",
+          "Email has already been taken"
+        ]
+      })
+    }
   end
 end
 
 describe 'PATCH /v1/users/:id' do
-  it "updates the user's creation date" do
-    user = create(:user)
-    new_created_at = Time.zone.now - 86400  # one day ago
+  let(:user) { create(:user) }
 
-    patch "/v1/users/#{user.id}", {
-      created_at: new_created_at
+  context 'with valid params' do
+    let(:request_params) {
+      {
+        user: {
+          first_name: 'John',
+          last_name: 'Smith'
+        }
+      }
     }
 
-    user = user.reload
-    expect(user.created_at.to_i).to eq new_created_at.to_i
-    expect(response_json).to eq({ 'id' => user.id })
+    before do
+      patch "/v1/users/#{user.id}", request_params
+      user.reload
+    end
+
+    it { expect(user.first_name).to eq 'John' }
+    it { expect(user.last_name).to eq 'Smith' }
+
+    it { expect(response_json['id']).to be }
+    it { expect(response_json['first_name']).to eq 'John' }
+    it { expect(response_json['last_name']).to eq 'Smith' }
+  end
+
+  context 'with invalid params' do
+    let(:request_params) {
+      {
+        user: {
+          first_name: ''
+        }
+      }
+    }
+
+    before do
+      patch "/v1/users/#{user.id}", request_params
+    end
+
+    it { expect(response_json).to eq(
+      {
+        'message' => 'Validation Failed',
+        'errors' => [
+          "First name can't be blank"
+        ]
+      })
+    }
   end
 end
 
 describe 'DELETE /v1/users/:id' do
-  it "deletes a user by :id" do
-    user = create(:user)
+  let(:user) { create(:user) }
 
-    delete "/v1/users/#{user.id}", {}
-
-    expect(User.count).to eq 0
-    expect(response_json).to eq({ 'id' => user.id })
+  before do
+    delete "/v1/users/#{user.id}"
   end
+
+  it { expect(User.count).to eq 0 }
+  it { expect(response_json).to eq({ 'id' => user.id }) }
 end
