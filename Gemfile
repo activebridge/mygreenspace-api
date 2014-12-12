@@ -11,8 +11,6 @@ gem 'unicorn',                  '~> 4.8.3'  # for serving http requests
 gem 'doorkeeper',               '~> 1.4.0'  # OAuth 2 provider for rails
 gem 'doorkeeper-grants_assertion'           # integrates sign in with facebook
 
-
-
 group :development do
   gem 'spring',                 '~> 1.1.3'  # for fast rails actions via pre-loading
   gem 'spring-commands-rspec',  '~> 1.0.2'  # for rspec support in spring
