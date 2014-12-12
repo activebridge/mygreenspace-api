@@ -12,10 +12,15 @@ Doorkeeper.configure do
   end
 
   resource_owner_from_credentials do |routes|
-    user = User.find_by_email(params[:email])
-    session[:user_id] = user.id if user
-    user
+    User.find_by_email(params[:email])
   end
+
+  resource_owner_from_assertion do
+    raise "'facebook_access_token' is required with 'assertion_type' = 'facebook'" if params[:facebook_access_token].blank?
+    Oauth::Assertion.authenticate_with_facebook(params[:facebook_access_token])
+  end
+
+  grant_flows %w(assertion password client_credentials)
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
   # admin_authenticator do

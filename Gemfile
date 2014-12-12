@@ -9,7 +9,7 @@ gem 'jbuilder',                 '~> 2.2.3'  # for creating json structure
 gem 'oj',                       '~> 2.10.3' # for parsing incoming json requests
 gem 'unicorn',                  '~> 4.8.3'  # for serving http requests
 gem 'doorkeeper',               '~> 1.4.0'  # OAuth 2 provider for rails
-gem 'doorkeeper-grants_assertion'           # integrates sign in with facebook
+gem "doorkeeper-grants_assertion", github: "Inittec/doorkeeper-grants_assertion", branch: "master"# integrates sign in with facebook
 
 group :development do
   gem 'spring',                 '~> 1.1.3'  # for fast rails actions via pre-loading
