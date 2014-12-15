@@ -1,4 +1,6 @@
 class Api::V1::UsersController < ApiController
+  before_action :find_user, only: [:show, :update, :destroy]
+
   def index
     @users = User.all
 
@@ -10,10 +12,10 @@ class Api::V1::UsersController < ApiController
   end
 
   def create
-    @user = User.last   # uncertain of this line
+    @user = User.new(user_params)
 
     if @user.save
-      render
+      render :show
     else
       render json: {
         message: 'Validation Failed',
@@ -23,14 +25,11 @@ class Api::V1::UsersController < ApiController
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.last   # uncertain of this line
-
     if @user.update(user_params)
-      render
+      render :show
     else
       render json: {
         message: 'Validation Failed',
@@ -40,8 +39,6 @@ class Api::V1::UsersController < ApiController
   end
 
   def destroy
-    @user = User.find(params[:id])
-
     if @user.destroy
       render
     else
@@ -55,8 +52,10 @@ class Api::V1::UsersController < ApiController
   private
 
   def user_params
-    {
-      created_at: params[:created_at]
-    }
+    params.require(:user).permit(:email, :first_name, :last_name)
+  end
+
+  def find_user
+    @user = User.find(params[:id])
   end
 end

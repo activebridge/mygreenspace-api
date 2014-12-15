@@ -8,6 +8,8 @@ gem 'rack-timeout',             '~> 0.1.0'  # for aborting requests that are tak
 gem 'jbuilder',                 '~> 2.2.3'  # for creating json structure
 gem 'oj',                       '~> 2.10.3' # for parsing incoming json requests
 gem 'unicorn',                  '~> 4.8.3'  # for serving http requests
+gem 'doorkeeper',               '~> 1.4.0'  # OAuth 2 provider for rails
+gem "doorkeeper-grants_assertion", github: "Inittec/doorkeeper-grants_assertion", branch: "master"# integrates sign in with facebook
 
 group :development do
   gem 'spring',                 '~> 1.1.3'  # for fast rails actions via pre-loading
@@ -27,6 +29,8 @@ group :development, :test do
   gem 'database_cleaner',       '~> 1.3.0'  # for cleaning databases
   gem 'did_you_mean',           '~> 0.9.4'  # for catching human blunders
   gem 'dotenv-rails',           '~> 1.0.2'  # for loading environment variables
+  gem 'faker',                  '~> 1.4.3'  # used for factories to generate test data
+  gem 'rspec-collection_matchers'
 end
 
 group :test do

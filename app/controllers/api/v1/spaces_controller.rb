@@ -1,8 +1,11 @@
 class Api::V1::SpacesController < ApiController
-  def index
-    @spaces = Space.all
+  doorkeeper_for :all
+  before_action :find_space, only: [:show, :update, :destroy]
 
-    if @spaces.count(:all) > 0
+  def index
+    @spaces = current_user.spaces
+
+    if @spaces.present?
       render
     else
       render json: { message: 'No Spaces Found' }, status: 200
@@ -10,10 +13,10 @@ class Api::V1::SpacesController < ApiController
   end
 
   def create
-    @space = Space.last   # uncertain of this line
+    @space = current_user.spaces.build(space_params)
 
     if @space.save
-      render
+      render :show
     else
       render json: {
         message: 'Validation Failed',
@@ -23,12 +26,9 @@ class Api::V1::SpacesController < ApiController
   end
 
   def show
-    @space = Space.find(params[:id])
   end
 
   def update
-    @space = Space.last   # uncertain of this line
-
     if @space.update(space_params)
       render
     else
@@ -40,8 +40,6 @@ class Api::V1::SpacesController < ApiController
   end
 
   def destroy
-    @space = Space.find(params[:id])
-
     if @space.destroy
       render
     else
@@ -55,8 +53,10 @@ class Api::V1::SpacesController < ApiController
   private
 
   def space_params
-    {
-      created_at: params[:created_at]
-    }
+    params.require(:space).permit(:width, :length)
+  end
+
+  def find_space
+    @space = current_user.spaces.find(params[:id])
   end
 end

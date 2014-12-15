@@ -1,0 +1,19 @@
+# Create new user
+
+  curl -X POST --data "user[email]=eugene@active-bridge.com&user[first_name]=eugne&user[last_name]=korpan" http://localhost:3000/v1/users
+
+
+# Authenticate user
+
+  curl -X POST --data "grant_type=password&email=eugene@active-bridge.com" http://localhost:3000/oauth/token
+
+
+# Create new space
+
+  curl -X POST --data "access_token=54b1a64d9948b426dfcb59f9e8a090bc2dbc236f67584a08f654a0e17e14f5da&space[width]=10&space[length]=20" http://localhost:3000/v1/users/id/spaces
+
+
+# View all spaces
+
+  curl -X GET --data "access_token=54b1a64d9948b426dfcb59f9e8a090bc2dbc236f67584a08f654a0e17e14f5da" http://localhost:3000/v1/users/id/spaces
+
