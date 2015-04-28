@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'GET /v1/users/:id' do
   context 'with valid user' do
-    let(:user) { create(:user) }
+    let!(:user) { create(:user) }
 
     before do
       get "/v1/users/#{user.id}"
@@ -81,7 +81,7 @@ describe 'POST /v1/users' do
   end
 
   context 'with invalid params' do
-    let(:exisging_user) { create(:user) }
+    let!(:exisging_user) { create(:user) }
     let(:request_params) {
       {
         user: {
@@ -109,7 +109,7 @@ describe 'POST /v1/users' do
 end
 
 describe 'PATCH /v1/users/:id' do
-  let(:user) { create(:user) }
+  let!(:user) { create(:user) }
 
   context 'with valid params' do
     let(:request_params) {
@@ -159,7 +159,7 @@ describe 'PATCH /v1/users/:id' do
 end
 
 describe 'DELETE /v1/users/:id' do
-  let(:user) { create(:user) }
+  let!(:user) { create(:user) }
 
   before do
     delete "/v1/users/#{user.id}"
