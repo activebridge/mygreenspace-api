@@ -3,9 +3,15 @@ require 'spec_helper'
 describe 'GET /v1/users/:id' do
   context 'with valid user' do
     let!(:user) { create(:user) }
+    let!(:access_token) { create(:access_token, resource_owner_id: user.id) }
+    let(:request_params) {
+      {
+        access_token: access_token.token
+      }
+    }
 
     before do
-      get "/v1/users/#{user.id}"
+      get "/v1/users/#{user.id}", request_params
     end
 
     it { expect(response_json).to eq({
@@ -22,10 +28,16 @@ describe 'GET /v1/users/:id' do
 
   context 'with invalid user' do
     let(:id) { 'unexisting_user_id' }
+    let!(:access_token) { create(:access_token, resource_owner_id: id) }
+    let(:request_params) {
+      {
+        access_token: access_token.token
+      }
+    }
 
     it {
       expect {
-        get "/v1/users/#{id}"
+        get "/v1/users/#{id}", request_params
       }.to raise_error ActiveRecord::RecordNotFound
     }
   end
@@ -34,9 +46,15 @@ end
 describe 'GET /v1/users' do
   let!(:user_1) { create(:user) }
   let!(:user_2) { create(:user) }
+  let!(:access_token) { create(:access_token, resource_owner_id: user_1.id) }
+  let(:request_params) {
+    {
+      access_token: access_token.token
+    }
+  }
 
   before do
-    get '/v1/users'
+    get '/v1/users', request_params
   end
 
   it { expect(response_json['users']).to have(2).items }
@@ -110,10 +128,12 @@ end
 
 describe 'PATCH /v1/users/:id' do
   let!(:user) { create(:user) }
+  let!(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
   context 'with valid params' do
     let(:request_params) {
       {
+        access_token: access_token.token,
         user: {
           first_name: 'John',
           last_name: 'Smith'
@@ -135,8 +155,10 @@ describe 'PATCH /v1/users/:id' do
   end
 
   context 'with invalid params' do
+    let!(:access_token) { create(:access_token, resource_owner_id: user.id) }
     let(:request_params) {
       {
+        access_token: access_token.token,
         user: {
           first_name: ''
         }
@@ -160,9 +182,15 @@ end
 
 describe 'DELETE /v1/users/:id' do
   let!(:user) { create(:user) }
+  let!(:access_token) { create(:access_token, resource_owner_id: user.id) }
+  let(:request_params) {
+    {
+      access_token: access_token.token
+    }
+  }
 
   before do
-    delete "/v1/users/#{user.id}"
+    delete "/v1/users/#{user.id}", request_params
   end
 
   it { expect(User.count).to eq 0 }
