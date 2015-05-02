@@ -11,6 +11,7 @@ gem 'unicorn',                  '~> 4.8.3'  # for serving http requests
 gem 'doorkeeper',               '~> 1.4.0'  # OAuth 2 provider for rails
 gem "doorkeeper-grants_assertion", github: "Inittec/doorkeeper-grants_assertion", branch: "master"# integrates sign in with facebook
 gem 'bcrypt',                   '~> 3.1.7'
+gem 'bootstrap-sass'
 gem 'haml',                     '~> 4.0.5'
 gem 'jquery-rails',             '~> 3.1.2'
 gem 'coffee-rails',             '~> 4.0.0'

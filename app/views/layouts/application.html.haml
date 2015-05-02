@@ -7,12 +7,5 @@
     = csrf_meta_tags
   %body
     .container-fluid
-      .row
-        .col-md-8
-        .col-md-4
-      .row
-        .col-md-12.alert.fade{'active-class' => 'in alert', :duration => '0', 'flash-alert' => '', class: 'display-none'}
-          %button.close{'ng-click' => 'hide();', :type => 'button'} &times;
-          %span.alert-message {{flash.message}}
       %div{'ng-view' => ''}
 

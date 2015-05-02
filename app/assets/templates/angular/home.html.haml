@@ -1,0 +1,22 @@
+.row
+  .col-md-6
+    %form.new-user{'ng-submit' => 'create()'}
+      .form-group
+        %input.form-control{type: 'text', 'ng-model' => 'newUser.first_name', placeholder: 'First Name'}
+      .form-group
+        %input.form-control{type: 'text', 'ng-model' => 'newUser.last_name', placeholder: 'Last Name'}
+      .form-group
+        %input.form-control{type: 'email', 'ng-model' => 'newUser.email', placeholder: 'Email'}
+      .form-group
+        %input.form-control{type: 'password', 'ng-model' => 'newUser.password', placeholder: 'Password'}
+      .form-group
+        %input.form-control{type: 'password', 'ng-model' => 'newUser.password_confirmation', placeholder: 'Password Confirmation'}
+
+      %button.btn.btn-primary{type: 'submit'}
+        Submit
+
+  .col-md-6{'ng-show' => 'userInfo'}
+    .row
+      Response: {{responseStatus}}
+    .row.json
+      {{userInfo}}

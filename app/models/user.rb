@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 
   validates :password,        presence: true,
                               length: { minimum: 6 }, on: :create, if: :signed_via_email?
+  validates_confirmation_of :password, if: :password
 
   validates :first_name,      presence: true
   validates :last_name,       presence: true
