@@ -78,12 +78,15 @@ describe 'POST /v1/users' do
     let(:email) { Faker::Internet.email }
     let(:first_name) { Faker::Name.first_name }
     let(:last_name) { Faker::Name.last_name }
+    let(:password) { 'Password1' }
     let(:request_params) {
       {
         user: {
           email: email,
           first_name: first_name,
           last_name: last_name,
+          password: password,
+          password_confirmation: password
         }
       }
     }
