@@ -7,4 +7,6 @@ MyGreenSpaceAPI::Application.routes.draw do
       end
     end
   end
+
+  root 'home#index'
 end

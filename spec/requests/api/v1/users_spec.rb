@@ -82,6 +82,7 @@ describe 'POST /v1/users' do
     let(:request_params) {
       {
         user: {
+          sign_up_type: User::SignUpType::EMAIL,
           email: email,
           first_name: first_name,
           last_name: last_name,
@@ -106,6 +107,7 @@ describe 'POST /v1/users' do
     let(:request_params) {
       {
         user: {
+          sign_up_type: User::SignUpType::EMAIL,
           first_name: '',
           email: exisging_user.email
         }
@@ -113,6 +115,7 @@ describe 'POST /v1/users' do
     }
 
     before do
+      allow_any_instance_of(User).to receive(:provided_by_email?).and_return(true)
       post '/v1/users', request_params
     end
 
@@ -120,6 +123,8 @@ describe 'POST /v1/users' do
       {
         'message' => 'Validation Failed',
         'errors' => [
+          "Password can't be blank",
+          "Password is too short (minimum is 6 characters)",
           "First name can't be blank",
           "Last name can't be blank",
           "Email has already been taken"

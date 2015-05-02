@@ -1,13 +1,20 @@
 class User < ActiveRecord::Base
+  module SignUpType
+    EMAIL = 'email'
+    FACEBOOK = 'facebook'
+  end
+
+  attr_accessor :sign_up_type
+
   has_secure_password validations: false
 
   validates :password,        presence: true,
-                              length: { minimum: 6 }, on: :create, if: :provided_by_email?
+                              length: { minimum: 6 }, on: :create, if: :signed_via_email?
 
   validates :first_name,      presence: true
   validates :last_name,       presence: true
 
-  validates :email,           uniqueness: { allow_nil: true },       on: :create
+  validates :email,           uniqueness: true, on: :create, if: :signed_via_email?
   validates :email,           uniqueness: { case_sensitive: false }, on: :update
 
   has_many :spaces
@@ -23,7 +30,7 @@ class User < ActiveRecord::Base
 
   private
 
-  def provided_by_email?
-    provider == 'email'
+  def signed_via_email?
+    sign_up_type == SignUpType::EMAIL
   end
 end

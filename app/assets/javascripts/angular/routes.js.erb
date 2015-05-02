@@ -1,0 +1,17 @@
+'use strict';
+
+myGreenSpace.config([
+  '$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+    $routeProvider
+      .when('/', {
+        templateUrl: '<%= asset_path('angular/home.html') %>',
+        controller: 'HomeCtrl'
+      })
+      .otherwise({ redirectTo: '/' });
+  }
+]).config(["$httpProvider", function($httpProvider) {
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
+  }
+])
+
+

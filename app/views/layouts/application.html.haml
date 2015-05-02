@@ -1,0 +1,18 @@
+!!!
+%html{'ng-app' => 'myGreenSpace'}
+  %head
+    %title My Green Space API Demo
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    .container-fluid
+      .row
+        .col-md-8
+        .col-md-4
+      .row
+        .col-md-12.alert.fade{'active-class' => 'in alert', :duration => '0', 'flash-alert' => '', class: 'display-none'}
+          %button.close{'ng-click' => 'hide();', :type => 'button'} &times;
+          %span.alert-message {{flash.message}}
+      %div{'ng-view' => ''}
+

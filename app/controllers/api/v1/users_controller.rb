@@ -55,7 +55,7 @@ class Api::V1::UsersController < ApiController
 
   def user_params
     params.require(:user).permit(:email, :first_name, :last_name,
-                                 :password, :password_confirmation)
+                                 :password, :password_confirmation, :sign_up_type)
   end
 
   def find_user

@@ -1,13 +1,16 @@
 require 'spec_helper'
 
 describe 'POST /oauth/token' do
-  let(:user) { create(:user) }
+  let(:password) { 'Password1' }
+  let(:user) { create(:user, password: password,
+                             password_confirmation: password) }
 
   context 'returns access token' do
     let(:request_params) {
       {
         grant_type: 'password',
-        email: user.email
+        email: user.email,
+        password: password
       }
     }
 
@@ -18,6 +21,23 @@ describe 'POST /oauth/token' do
     it { expect(response_json['access_token']).to be }
     it { expect(response_json['token_type']).to eq 'bearer' }
     it { expect(response_json.keys.count).to eq 2 }
+  end
+
+  context 'invalid password' do
+    let(:request_params) {
+      {
+        grant_type: 'password',
+        email: user.email,
+        password: 'invalid'
+      }
+    }
+
+    before do
+      post "/oauth/token", request_params
+    end
+
+    it { expect(response_json['error']).to eq 'invalid_resource_owner' }
+    it { expect(response_json['error_description']).to eq 'The provided resource owner credentials are not valid, or resource owner cannot be found' }
   end
 
   context 'returns an error' do

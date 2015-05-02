@@ -11,6 +11,10 @@ gem 'unicorn',                  '~> 4.8.3'  # for serving http requests
 gem 'doorkeeper',               '~> 1.4.0'  # OAuth 2 provider for rails
 gem "doorkeeper-grants_assertion", github: "Inittec/doorkeeper-grants_assertion", branch: "master"# integrates sign in with facebook
 gem 'bcrypt',                   '~> 3.1.7'
+gem 'haml',                     '~> 4.0.5'
+gem 'jquery-rails',             '~> 3.1.2'
+gem 'coffee-rails',             '~> 4.0.0'
+gem 'turbolinks',               '~> 2.5.3'
 
 group :development do
   gem 'spring',                 '~> 1.1.3'  # for fast rails actions via pre-loading
@@ -35,6 +39,8 @@ group :development, :test do
 end
 
 group :test do
+  gem 'shoulda',                '~> 3.5.0'
+  gem 'shoulda-context',        '~> 1.2.1'
   gem 'shoulda-matchers',       '~> 2.7.0', require: false  # for common rspec matchers
 end
 
