@@ -1,0 +1,37 @@
+.row
+  .col-md-6
+    %form.new-user{'ng-submit' => 'createByEmail()'}
+      .form-group
+        %input.form-control{type: 'text', 'ng-model' => 'newUser.first_name', placeholder: 'First Name'}
+      .form-group
+        %input.form-control{type: 'text', 'ng-model' => 'newUser.last_name', placeholder: 'Last Name'}
+      .form-group
+        %input.form-control{type: 'email', 'ng-model' => 'newUser.email', placeholder: 'Email'}
+      .form-group
+        %input.form-control{type: 'password', 'ng-model' => 'newUser.password', placeholder: 'Password'}
+      .form-group
+        %input.form-control{type: 'password', 'ng-model' => 'newUser.password_confirmation', placeholder: 'Password Confirmation'}
+
+      .form-group
+        %button.btn.btn-primary{type: 'submit'}
+          Submit
+
+    %strong
+      OR
+    %br/
+    %br/
+
+    %form.new-user{'ng-submit' => 'createViaFacebook()'}
+      .form-group
+        %input.form-control{type: 'text', 'ng-model' => 'newUser.facebook_access_token', placeholder: 'Facebook Access Token'}
+
+      .form-group
+        %button.btn.btn-primary{type: 'submit'}
+          .fa.fa-facebook-square.fa-larger
+          Facebook
+
+  .col-md-6{'ng-show' => 'response'}
+    .row
+      Response: {{responseStatus}}
+    .row.json
+      {{response}}

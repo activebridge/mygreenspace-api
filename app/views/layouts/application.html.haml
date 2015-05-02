@@ -7,5 +7,16 @@
     = csrf_meta_tags
   %body
     .container-fluid
+      .row.pull-right
+        %a{href: '/#/'}
+          Sign In
+        |
+        %a{href: '/#/signup'}
+          Sign Up
+        |
+        %a{href: '/#/token'}
+          Fetch User Data by token
+      %br/
+      %br/
       %div{'ng-view' => ''}
 

@@ -2,21 +2,31 @@
   .col-md-6
     %form.new-user{'ng-submit' => 'create()'}
       .form-group
-        %input.form-control{type: 'text', 'ng-model' => 'newUser.first_name', placeholder: 'First Name'}
+        %input.form-control{type: 'email', 'ng-model' => 'newToken.email', placeholder: 'Email'}
       .form-group
-        %input.form-control{type: 'text', 'ng-model' => 'newUser.last_name', placeholder: 'Last Name'}
-      .form-group
-        %input.form-control{type: 'email', 'ng-model' => 'newUser.email', placeholder: 'Email'}
-      .form-group
-        %input.form-control{type: 'password', 'ng-model' => 'newUser.password', placeholder: 'Password'}
-      .form-group
-        %input.form-control{type: 'password', 'ng-model' => 'newUser.password_confirmation', placeholder: 'Password Confirmation'}
+        %input.form-control{type: 'password', 'ng-model' => 'newToken.password', placeholder: 'Password'}
 
       %button.btn.btn-primary{type: 'submit'}
-        Submit
+        Sign In
 
-  .col-md-6{'ng-show' => 'userInfo'}
+    %br/
+    %br/
+    %strong
+      OR
+    %br/
+    %br/
+
+    %form.new-user{'ng-submit' => 'signInViaFacebook()'}
+      .form-group
+        %input.form-control{type: 'text', 'ng-model' => 'newToken.facebook_access_token', placeholder: 'Facebook Access Token'}
+
+      .form-group
+        %button.btn.btn-primary{type: 'submit'}
+          .fa.fa-facebook-square.fa-larger
+          Facebook
+
+  .col-md-6{'ng-show' => 'response'}
     .row
       Response: {{responseStatus}}
     .row.json
-      {{userInfo}}
+      {{response}}

@@ -7,6 +7,14 @@ myGreenSpace.config([
         templateUrl: '<%= asset_path('angular/home.html') %>',
         controller: 'HomeCtrl'
       })
+      .when('/signup', {
+        templateUrl: '<%= asset_path('angular/signup.html') %>',
+        controller: 'SignupCtrl'
+      })
+      .when('/token', {
+        templateUrl: '<%= asset_path('angular/token.html') %>',
+        controller: 'TokenCtrl'
+      })
       .otherwise({ redirectTo: '/' });
   }
 ]).config(["$httpProvider", function($httpProvider) {

@@ -21,6 +21,7 @@ module MyGreenSpaceAPI
     # config.time_zone = 'Central Time (US & Canada)'
 
     config.assets.paths << Rails.root.join('app', 'assets', 'templates')
+    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
 
     config.autoload_paths += %W(#{Rails.root}/lib)
 

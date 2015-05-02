@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApiController
   doorkeeper_for :all, except: :create
 
-  before_action :find_user, only: [:show, :update, :destroy]
+  before_action :find_user, only: [:update, :destroy]
 
   def index
     @users = User.all
@@ -27,6 +27,7 @@ class Api::V1::UsersController < ApiController
   end
 
   def show
+    @user = current_user
   end
 
   def update
