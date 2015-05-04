@@ -4,14 +4,22 @@ myGreenSpace.config([
   '$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
+        templateUrl: '<%= asset_path('angular/reset_password.html') %>',
+        controller: 'PasswordResetsCtrl'
+      })
+      .when('/password_resets/:token/edit', {
+        templateUrl: '<%= asset_path('angular/new_password.html') %>',
+        controller: 'PasswordResetsCtrl'
+      })
+      .when('/test-api', {
         templateUrl: '<%= asset_path('angular/home.html') %>',
         controller: 'HomeCtrl'
       })
-      .when('/signup', {
+      .when('/test-api/signup', {
         templateUrl: '<%= asset_path('angular/signup.html') %>',
         controller: 'SignupCtrl'
       })
-      .when('/token', {
+      .when('/test-api/token', {
         templateUrl: '<%= asset_path('angular/token.html') %>',
         controller: 'TokenCtrl'
       })

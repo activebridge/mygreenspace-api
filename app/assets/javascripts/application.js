@@ -8,6 +8,7 @@
 //= require angular-route.min
 //
 //= require angular
+//= require angular/config/html5
 //= require angular/routes
 //= require angular/factories
 //= require_tree ./angular/controllers

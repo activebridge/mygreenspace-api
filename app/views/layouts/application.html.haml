@@ -7,16 +7,7 @@
     = csrf_meta_tags
   %body
     .container-fluid
-      .row.pull-right
-        %a{href: '/#/'}
-          Sign In
-        |
-        %a{href: '/#/signup'}
-          Sign Up
-        |
-        %a{href: '/#/token'}
-          Fetch User Data by token
+      %ng-include(src="'#{asset_path('angular/links.html')}'" ng-controller="LinksCtrl")
       %br/
       %br/
       %div{'ng-view' => ''}
-

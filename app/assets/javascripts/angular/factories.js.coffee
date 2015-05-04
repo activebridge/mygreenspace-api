@@ -5,3 +5,7 @@ myGreenSpace.factory 'User', ['$resource', ($resource) ->
 myGreenSpace.factory 'Token', ['$resource', ($resource) ->
   $resource('/oauth/token')
 ]
+
+myGreenSpace.factory 'PasswordReset', ['$resource', ($resource) ->
+  $resource('/v1/password_resets/:id', {id: '@id'}, {update: {method: 'PUT'}})
+]
