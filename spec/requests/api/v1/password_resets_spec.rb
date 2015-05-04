@@ -11,6 +11,7 @@ describe 'POST /v1/password_resets' do
     }
 
     before do
+      allow_any_instance_of(ResetPasswordService).to receive(:perform!)
       post "/v1/password_resets", request_params
     end
 
