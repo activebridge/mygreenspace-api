@@ -16,6 +16,7 @@ gem 'haml',                     '~> 4.0.5'
 gem 'jquery-rails',             '~> 3.1.2'
 gem 'coffee-rails',             '~> 4.0.0'
 gem 'turbolinks',               '~> 2.5.3'
+gem 'mandrill-api',             '~> 1.0.53', require: 'mandrill'
 
 group :development do
   gem 'spring',                 '~> 1.1.3'  # for fast rails actions via pre-loading
